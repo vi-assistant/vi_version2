@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vi_assistant/controllers/utils/utils.dart';
+import 'package:vi_assistant/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
 class PasswordPage extends StatelessWidget {
@@ -27,7 +28,12 @@ class PasswordPage extends StatelessWidget {
                   onPressed: PageCont.login.goBack,
                   child: Text('Prev'),
                 ),
-                ElevatedButton(onPressed: () {}, child: Text('Submit')),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.reader);
+                  },
+                  child: Text('Submit'),
+                ),
               ],
             ),
             Spacer(),

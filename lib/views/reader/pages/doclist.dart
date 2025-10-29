@@ -5,6 +5,10 @@ class DoclistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ListView.separated(
+      itemCount: 5,
+      itemBuilder: (context, index) => ListTile(title: Text("Text $index")),
+      separatorBuilder: (context, index) => SizedBox(height: 12),
+    );
   }
 }
