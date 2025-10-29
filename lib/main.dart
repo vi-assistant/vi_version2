@@ -14,7 +14,6 @@ void main() {
       title: "VI-Assistant",
       initialRoute: '/splash',
       routes: {
-        Routes.home: (context) => Text("Doc List"),
         Routes.splash: (context) => SplashScreen(),
         Routes.login: (context) => LoginView(),
         Routes.signup: (context) => SignupView(),
