@@ -17,7 +17,7 @@ void main() {
         Routes.home: (context) => Text("Doc List"),
         Routes.splash: (context) => SplashScreen(),
         Routes.login: (context) => LoginView(),
-        Routes.signup: (context) => Text("Signup page"),
+        Routes.signup: (context) => SignupView(),
         Routes.reader: (context) => Text("Reader page"),
       },
     ),
