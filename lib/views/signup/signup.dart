@@ -16,13 +16,17 @@ class SignupView extends StatelessWidget {
           children: [
             SizedBox(
               width: size.width * 0.7,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("VI Assistant - Signup", style: Style.bold),
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(Icons.arrow_back),
+                    ),
+                    Text("VI Assistant - Signup", style: Style.bold),
+                  ],
+                ),
               ),
             ),
             Container(

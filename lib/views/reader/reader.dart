@@ -31,7 +31,10 @@ class ReaderView extends GetView<ReaderController> {
                           icon: Icon(Icons.arrow_back),
                         );
                       } else {
-                        return SizedBox.shrink();
+                        return IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: Icon(Icons.arrow_back),
+                        );
                       }
                     }),
                     Text("VI Assistant - Reader", style: Style.bold),
