@@ -32,10 +32,7 @@ class ReaderView extends StatelessWidget {
               padding: Style.screenPadding,
               child: PageView(
                 controller: PageCont.login,
-                children: [
-                  DoclistPage(),
-                  DocPage(),
-                ],
+                children: [DoclistPage(), DocPage()],
               ),
             ),
             Padding(

@@ -32,6 +32,11 @@ class Style {
     borderRadius: BorderRadius.circular(12),
   );
 
+  static final BoxDecoration listTile = BoxDecoration(
+    color: Colors.grey[200],
+    borderRadius: BorderRadius.circular(12),
+  );
+
   static InputDecoration roundedRectangle(String hint) => InputDecoration(
     hintText: hint,
     border: OutlineInputBorder(
@@ -43,6 +48,16 @@ class Style {
 
   static final EdgeInsets screenPadding = EdgeInsets.symmetric(
     horizontal: 24,
-    vertical: 16,
+    vertical: 24,
+  );
+
+  static final EdgeInsets cardPadding = EdgeInsets.symmetric(
+    horizontal: 16,
+    vertical: 12,
+  );
+
+  static final EdgeInsets tilePadding = EdgeInsets.symmetric(
+    horizontal: 24,
+    vertical: 24,
   );
 }
