@@ -3,8 +3,8 @@ import 'package:vi_assistant/controllers/utils/page_cont.dart';
 import 'package:vi_assistant/utils/utils.dart';
 import 'pages/pages.dart';
 
-class SignupView extends StatelessWidget {
-  const SignupView({super.key});
+class ReaderView extends StatelessWidget {
+  const ReaderView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SignupView extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Text("VI Assistant - Signup", style: Style.bold),
+                    child: Text("VI Assistant - Reader", style: Style.bold),
                   ),
                 ],
               ),
@@ -33,10 +33,8 @@ class SignupView extends StatelessWidget {
               child: PageView(
                 controller: PageCont.login,
                 children: [
-                  UsernamePage(),
-                  UserIdPage(),
-                  PasswordPage(),
-                  ConfirmPasswordPage(),
+                  DoclistPage(),
+                  DocPage(),
                 ],
               ),
             ),

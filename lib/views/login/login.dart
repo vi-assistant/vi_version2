@@ -21,7 +21,7 @@ class LoginView extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Text("VI Assistant", style: Style.bold),
+                    child: Text("VI Assistant - Login", style: Style.bold),
                   ),
                 ],
               ),
