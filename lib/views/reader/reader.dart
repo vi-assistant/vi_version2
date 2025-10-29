@@ -17,17 +17,39 @@ class ReaderView extends GetView<ReaderController> {
           children: [
             SizedBox(
               width: size.width * 0.7,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      children: [
-                        Text("VI Assistant - Reader", style: Style.bold),
-                      ],
-                    ),
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  spacing: 12,
+                  children: [
+                    Obx(() {
+                      if (controller.pageIndex.value != 0) {
+                        return IconButton(
+                          onPressed: () {
+                            PageCont.reader.goBack();
+                          },
+                          icon: Icon(Icons.arrow_back),
+                        );
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    }),
+                    Text("VI Assistant - Reader", style: Style.bold),
+                    Spacer(),
+                    Obx(() {
+                      if (controller.pageIndex.value != 0) {
+                        return IconButton(
+                          onPressed: () {
+                            PageCont.reader.goBack();
+                          },
+                          icon: Icon(Icons.bookmark),
+                        );
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    }),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -38,7 +60,9 @@ class ReaderView extends GetView<ReaderController> {
               child: PageView(
                 physics: NeverScrollableScrollPhysics(),
                 controller: controller.pageController,
-                onPageChanged: (page) {},
+                onPageChanged: (page) {
+                  controller.pageIndex.value = page.toInt();
+                },
                 children: [DoclistPage(), DocPage()],
               ),
             ),
