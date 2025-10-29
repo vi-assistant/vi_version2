@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vi_assistant/controllers/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
 class DoclistPage extends StatelessWidget {
@@ -7,12 +8,12 @@ class DoclistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: 5,
+      itemCount: 12,
       itemBuilder: (context, index) {
         return ListItem(
           title: "Text $index",
           preview: "This is the preview of the text",
-          onTap: () {},
+          onTap: PageCont.reader.goNext,
         );
       },
       separatorBuilder: (context, index) => SizedBox(height: 16),

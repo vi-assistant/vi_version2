@@ -14,4 +14,5 @@ class Cont extends PageController {
 class PageCont {
   static final Cont login = Cont();
   static final Cont signup = Cont();
+  static final Cont reader = Cont();
 }

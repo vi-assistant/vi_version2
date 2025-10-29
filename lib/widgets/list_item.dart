@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
 class ListItem extends StatelessWidget {
-  const ListItem({super.key, required this.title, required this.preview, required this.onTap});
+  const ListItem({
+    super.key,
+    required this.title,
+    required this.preview,
+    required this.onTap,
+  });
 
   final VoidCallback onTap;
   final String title;
@@ -10,11 +15,11 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: Style.tilePadding,
-      decoration: Style.listTile,
-      child: InkWell(
-        onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: Style.tilePadding,
+        decoration: Style.listTile,
         child: Row(
           children: [
             Expanded(

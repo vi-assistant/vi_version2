@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:vi_assistant/controllers/utils/page_cont.dart';
+import 'package:get/get.dart';
+import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/utils/utils.dart';
 import 'pages/pages.dart';
 
-class ReaderView extends StatelessWidget {
+class ReaderView extends GetView<ReaderController> {
   const ReaderView({super.key});
 
   @override
@@ -20,7 +21,11 @@ class ReaderView extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Text("VI Assistant - Reader", style: Style.bold),
+                    child: Row(
+                      children: [
+                        Text("VI Assistant - Reader", style: Style.bold),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -31,7 +36,8 @@ class ReaderView extends StatelessWidget {
               decoration: Style.screenCard,
               padding: Style.screenPadding,
               child: PageView(
-                controller: PageCont.login,
+                controller: controller.pageController,
+                onPageChanged: (page) {},
                 children: [DoclistPage(), DocPage()],
               ),
             ),
