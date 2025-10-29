@@ -4,8 +4,8 @@ import 'package:vi_assistant/controllers/login/login.dart';
 import 'package:vi_assistant/controllers/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
-class UsernamePage extends GetView<LoginController> {
-  const UsernamePage({super.key});
+class DepartmentPage extends GetView<LoginController> {
+  const DepartmentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,19 @@ class UsernamePage extends GetView<LoginController> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Spacer(),
-            TextEntry(label: "Enter Username", hint: "John"),
-            ElevatedButton(
-              onPressed: PageCont.login.goNext,
-              child: Text('Next'),
+            TextEntry(label: "Enter Department", hint: "Computer Engineering"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: PageCont.login.goBack,
+                  child: Text('Prev'),
+                ),
+                ElevatedButton(
+                  onPressed: PageCont.login.goNext,
+                  child: Text('Next'),
+                ),
+              ],
             ),
             Spacer(),
             SizedBox(height: 24),

@@ -33,7 +33,12 @@ class SignupView extends StatelessWidget {
               padding: Style.screenPadding,
               child: PageView(
                 controller: PageCont.login,
-                children: [UserIdPage(), PasswordPage()],
+                children: [
+                  UsernamePage(),
+                  UserIdPage(),
+                  PasswordPage(),
+                  ConfirmPasswordPage(),
+                ],
               ),
             ),
             Padding(

@@ -18,9 +18,18 @@ class UserIdPage extends GetView<LoginController> {
           children: [
             Spacer(),
             TextEntry(label: "Enter User ID", hint: "M1900123"),
-            ElevatedButton(
-              onPressed: PageCont.login.goNext,
-              child: Text('Next'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: PageCont.login.goBack,
+                  child: Text('Prev'),
+                ),
+                ElevatedButton(
+                  onPressed: PageCont.login.goNext,
+                  child: Text('Next'),
+                ),
+              ],
             ),
             Spacer(),
             SizedBox(height: 24),
