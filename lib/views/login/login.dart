@@ -32,6 +32,7 @@ class LoginView extends StatelessWidget {
               decoration: Style.screenCard,
               padding: Style.screenPadding,
               child: PageView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: PageCont.login,
                 children: [UserIdPage(), PasswordPage()],
               ),

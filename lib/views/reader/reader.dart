@@ -36,6 +36,7 @@ class ReaderView extends GetView<ReaderController> {
               decoration: Style.screenCard,
               padding: Style.screenPadding,
               child: PageView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: controller.pageController,
                 onPageChanged: (page) {},
                 children: [DoclistPage(), DocPage()],

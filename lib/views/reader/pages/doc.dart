@@ -6,9 +6,6 @@ class DocPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SfPdfViewer.network(
-      'http://ebooks.syncfusion.com/downloads/flutter-succinctly/flutter-succinctly.pdf',
-      onDocumentLoadFailed: (details) => debugPrint("Didn't load"),
-    );
+    return SfPdfViewer.asset('assets/doc/CIT101.pdf');
   }
 }
