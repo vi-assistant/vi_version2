@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:vi_assistant/controllers/controllers.dart';
+import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
 import 'package:vi_assistant/views/views.dart';
 
 // Vertex AI for Gemini suff
 
 void main() {
+  initServices();
   initControllers();
   runApp(
     MaterialApp(
