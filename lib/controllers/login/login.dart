@@ -10,8 +10,8 @@ class LoginController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await speechService.initStt();
-    speechService.listen();
+    // await speechService.initStt();
+    // speechService.listen();
     speechService.streamData.listen((data) {
       print(data);
       dta.value = data;

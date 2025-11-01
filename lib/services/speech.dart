@@ -14,6 +14,12 @@ class SpeechService extends GetxService {
   Stream<String> get streamData => _streamcontroller.stream;
 
   @override
+  void onInit() {
+    super.onInit();
+    initStt();
+  }
+
+  @override
   void onClose() {
     _streamcontroller.close();
     speech.stop();
@@ -28,6 +34,7 @@ class SpeechService extends GetxService {
     if (!isAvailable) {
       debugPrint('Permission not granted');
     }
+    // listen();
     return isAvailable;
   }
 

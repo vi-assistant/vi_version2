@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vi_assistant/controllers/controllers.dart';
+import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
 import 'pages/pages.dart';
@@ -11,12 +12,13 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final speechService = Get.find<SpeechService>();
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Obx(() => Text(controller.dta.value)),
+            Obx(() => Text('Text${controller.dta.value}')),
             SizedBox(
               width: size.width * 0.7,
               child: Padding(
@@ -28,6 +30,11 @@ class LoginView extends GetView<LoginController> {
                       icon: Icon(Icons.arrow_back),
                     ),
                     Text("VI Assistant - Login", style: Style.bold),
+                    Spacer(),
+                    IconButton(
+                      onPressed: () => speechService.listen(),
+                      icon: Icon(Icons.arrow_back),
+                    ),
                   ],
                 ),
               ),
