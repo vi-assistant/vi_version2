@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:vi_assistant/actions/actions.dart';
 import 'package:vi_assistant/controllers/utils/page_cont.dart';
@@ -8,11 +9,10 @@ import 'package:vi_assistant/repositories/llm_repository.dart';
 import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
-class ReaderController extends GetxController {
+class LoginController extends GetxController {
   LLMRepository llmRepo = LLMRepository();
   final speechService = Get.find<SpeechService>();
-  final pageController = PageCont.reader;
-  final RxInt pageIndex = 0.obs;
+  final pageController = PageCont.login;
   final RxString dta = ''.obs;
   final RxBool isListening = false.obs;
   final RxString lastWords = ''.obs;
@@ -23,6 +23,7 @@ class ReaderController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    done("Hi");
     speechService.streamData.listen((data) {
       Get.log('Live: ${data.liveResponse}, Final Text: ${data.entireResponse}');
       if (data.liveResponse != lastWords.value) done(data.liveResponse);
@@ -40,7 +41,7 @@ class ReaderController extends GetxController {
         Get.find<LLMService>().loading.value = true;
         final resp = await llmRepo.respond(
           text,
-          "READER",
+          "LOGIN",
           Actions.login(pageController.page!.toInt()),
         );
         action(resp);
@@ -61,24 +62,13 @@ class ReaderController extends GetxController {
       case "GO_BACK":
         pageController.goBack();
         break;
-      case "LIST_BOOKS":
-        // List books in document
+      case "ENTER_USERID":
         TextCont.userId.text = message.input;
         break;
-      case "OPEN":
-        // Open document
-        TextCont.userId.text = message.input;
-        break;
-      case "READ":
-        // Read document
-        TextCont.userId.text = message.input;
-        break;
-      case "WAIT":
-        // Pause reading
+      case "ENTER_PASSWORD":
         TextCont.password.text = message.input;
         break;
-      case "GOTO_PAGE":
-        // Go to page in document
+      case "NEXT_PAGE":
         pageController.goNext();
         break;
     }

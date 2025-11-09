@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vi_assistant/controllers/controllers.dart';
-import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
 import 'pages/pages.dart';
@@ -12,7 +11,6 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final speechService = Get.find<SpeechService>();
     return Scaffold(
       body: Center(
         child: Column(
@@ -31,10 +29,6 @@ class LoginView extends GetView<LoginController> {
                     ),
                     Text("VI Assistant - Login", style: Style.bold),
                     Spacer(),
-                    IconButton(
-                      onPressed: () => speechService.listen(),
-                      icon: Icon(Icons.arrow_back),
-                    ),
                   ],
                 ),
               ),

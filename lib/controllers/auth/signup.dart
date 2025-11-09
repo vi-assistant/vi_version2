@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:vi_assistant/actions/actions.dart';
 import 'package:vi_assistant/controllers/utils/page_cont.dart';
@@ -8,12 +9,10 @@ import 'package:vi_assistant/repositories/llm_repository.dart';
 import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
-class ReaderController extends GetxController {
+class SignupController extends GetxController {
   LLMRepository llmRepo = LLMRepository();
   final speechService = Get.find<SpeechService>();
-  final pageController = PageCont.reader;
-  final RxInt pageIndex = 0.obs;
-  final RxString dta = ''.obs;
+  final pageController = PageCont.login;
   final RxBool isListening = false.obs;
   final RxString lastWords = ''.obs;
 
@@ -40,7 +39,7 @@ class ReaderController extends GetxController {
         Get.find<LLMService>().loading.value = true;
         final resp = await llmRepo.respond(
           text,
-          "READER",
+          "SIGNUP",
           Actions.login(pageController.page!.toInt()),
         );
         action(resp);
@@ -55,31 +54,32 @@ class ReaderController extends GetxController {
 
   void action(BotMessage message) {
     switch (message.action) {
-      case "SIGNUP":
-        Get.toNamed(Routes.signup);
+      case "LOGIN":
+        Get.toNamed(Routes.login);
         break;
       case "GO_BACK":
         pageController.goBack();
         break;
-      case "LIST_BOOKS":
-        // List books in document
+      case "ENTER_USERNAME":
         TextCont.userId.text = message.input;
         break;
-      case "OPEN":
-        // Open document
-        TextCont.userId.text = message.input;
+      case "ENTER_USERID":
+        TextCont.username.text = message.input;
         break;
-      case "READ":
-        // Read document
-        TextCont.userId.text = message.input;
+      case "ENTER_DEPARTMENT":
+        TextCont.department.text = message.input;
         break;
-      case "WAIT":
-        // Pause reading
+      case "ENTER_PASSWORD":
         TextCont.password.text = message.input;
         break;
-      case "GOTO_PAGE":
-        // Go to page in document
+      case "CONFIRM_PASSWORD":
+        TextCont.confirmPassword.text = message.input;
+        break;
+      case "NEXT_PAGE":
         pageController.goNext();
+        break;
+      case "CHECK_DETAILS":
+        Get.toNamed(Routes.reader);
         break;
     }
   }

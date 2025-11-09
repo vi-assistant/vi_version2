@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
@@ -10,7 +11,7 @@ void main() {
   initServices();
   initControllers();
   runApp(
-    MaterialApp(
+    GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorSchemeSeed: Colors.blue[900]),
       title: "VI-Assistant",
