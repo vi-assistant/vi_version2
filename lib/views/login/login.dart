@@ -14,11 +14,9 @@ class LoginView extends GetView<LoginController> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Obx(() => Text('Text${controller.dta.value}')),
+            SizedBox(height: 45),
             SizedBox(
-              width: size.width * 0.7,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Row(
@@ -34,9 +32,8 @@ class LoginView extends GetView<LoginController> {
               ),
             ),
             Container(
-              width: size.width * 0.7,
+              width: size.width * 0.9,
               height: size.height * 0.7,
-              decoration: Style.screenCard,
               padding: Style.screenPadding,
               child: PageView(
                 physics: NeverScrollableScrollPhysics(),

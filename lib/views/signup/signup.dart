@@ -12,27 +12,23 @@ class SignupView extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: size.width * 0.7,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.arrow_back),
-                    ),
-                    Text("VI Assistant - Signup", style: Style.bold),
-                  ],
-                ),
+            SizedBox(height: 45),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(Icons.arrow_back),
+                  ),
+                  Text("VI Assistant - Signup", style: Style.bold),
+                ],
               ),
             ),
             Container(
-              width: size.width * 0.7,
+              width: size.width * 0.9,
               height: size.height * 0.7,
-              decoration: Style.screenCard,
               padding: Style.screenPadding,
               child: PageView(
                 physics: NeverScrollableScrollPhysics(),

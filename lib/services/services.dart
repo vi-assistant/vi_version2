@@ -7,6 +7,6 @@ export 'llm_service.dart';
 export 'speech_service.dart';
 
 void initServices() async {
-  await Get.putAsync(() => LLMService().init());
-  await Get.putAsync(() => SpeechService().init());
+  Get.lazyPut(() => LLMService());
+  Get.lazyPut(() => SpeechService());
 }

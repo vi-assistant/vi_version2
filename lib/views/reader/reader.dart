@@ -11,74 +11,69 @@ class ReaderView extends GetView<ReaderController> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: size.width * 0.7,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  spacing: 12,
-                  children: [
-                    Obx(() {
-                      if (controller.pageIndex.value != 0) {
-                        return IconButton(
-                          onPressed: () {
-                            PageCont.reader.goBack();
-                          },
-                          icon: Icon(Icons.arrow_back),
-                        );
-                      } else {
-                        return IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          icon: Icon(Icons.arrow_back),
-                        );
-                      }
-                    }),
-                    Text("VI Assistant - Reader", style: Style.bold),
-                    Spacer(),
-                    Obx(() {
-                      if (controller.pageIndex.value != 0) {
-                        return IconButton(
-                          onPressed: () {
-                            PageCont.reader.goBack();
-                          },
-                          icon: Icon(Icons.bookmark),
-                        );
-                      } else {
-                        return SizedBox.shrink();
-                      }
-                    }),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              width: size.width * 0.7,
-              height: size.height * 0.7,
-              decoration: Style.screenCard,
-              padding: Style.screenPadding,
-              child: PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: controller.pageController,
-                onPageChanged: (page) {
-                  controller.pageIndex.value = page.toInt();
-                },
-                children: [DoclistPage(), DocPage()],
-              ),
-            ),
-            Padding(
+      body: Column(
+        children: [
+          SizedBox(height: 45),
+          SizedBox(
+            child: Padding(
               padding: const EdgeInsets.all(12.0),
-              child: Text(
-                'Privacy Policy | Terms and conditions',
-                style: Style.grey,
-                textAlign: TextAlign.center,
+              child: Row(
+                spacing: 12,
+                children: [
+                  Obx(() {
+                    if (controller.pageIndex.value != 0) {
+                      return IconButton(
+                        onPressed: () {
+                          PageCont.reader.goBack();
+                        },
+                        icon: Icon(Icons.arrow_back),
+                      );
+                    } else {
+                      return IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.arrow_back),
+                      );
+                    }
+                  }),
+                  Text("VI Assistant - Reader", style: Style.bold),
+                  Spacer(),
+                  Obx(() {
+                    if (controller.pageIndex.value != 0) {
+                      return IconButton(
+                        onPressed: () {
+                          PageCont.reader.goBack();
+                        },
+                        icon: Icon(Icons.bookmark),
+                      );
+                    } else {
+                      return SizedBox.shrink();
+                    }
+                  }),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          Container(
+            height: size.height * 0.8,
+            padding: Style.screenPadding,
+            child: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: controller.pageController,
+              onPageChanged: (page) {
+                controller.pageIndex.value = page.toInt();
+              },
+              children: [DoclistPage(), DocPage()],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              'Privacy Policy | Terms and conditions',
+              style: Style.grey,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
       ),
     );
   }
