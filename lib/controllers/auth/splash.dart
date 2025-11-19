@@ -18,7 +18,6 @@ class SplashController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    print("Here");
     done("Hi");
     speechService.streamData.listen((data) {
       Get.log('Live: ${data.liveResponse}');

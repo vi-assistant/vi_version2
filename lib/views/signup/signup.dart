@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/controllers/utils/page_cont.dart';
 import 'package:vi_assistant/utils/utils.dart';
 import 'pages/pages.dart';
@@ -9,6 +11,7 @@ class SignupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    Get.find<SignupController>();
     return Scaffold(
       body: Center(
         child: Column(
@@ -36,6 +39,7 @@ class SignupView extends StatelessWidget {
                 children: [
                   UsernamePage(),
                   UserIdPage(),
+                  DepartmentPage(),
                   PasswordPage(),
                   // ConfirmPasswordPage(),
                 ],

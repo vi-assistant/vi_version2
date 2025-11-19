@@ -6,13 +6,16 @@ import 'package:vi_assistant/controllers/utils/page_cont.dart';
 import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/models/models.dart';
 import 'package:vi_assistant/repositories/llm_repository.dart';
+import 'package:vi_assistant/services/box_service.dart';
 import 'package:vi_assistant/services/firestore_service.dart';
 import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
 class LoginController extends GetxController {
-  LLMRepository llmRepo = LLMRepository();
   final speechService = Get.find<SpeechService>();
+  final db = Get.find<FirestoreService>();
+  final box = Get.find<BoxService>();
+  final llmRepo = LLMRepository();
   final pageController = PageCont.login;
   final RxString dta = ''.obs;
   final RxBool isListening = false.obs;
@@ -25,7 +28,6 @@ class LoginController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    print("Me!!!");
     speechService.streamData.listen((data) {
       Get.log('Live: ${data.liveResponse}, Final Text: ${data.entireResponse}');
       if (data.liveResponse != lastWords.value) done(data.liveResponse);
@@ -82,16 +84,15 @@ class LoginController extends GetxController {
   }
 
   void login() async {
-    final db = Get.find<FirestoreService>();
-    bool loggedIn = await db.loginUser(
-      TextCont.userId.text,
-      TextCont.password.text,
-    );
-
-    if (loggedIn) {
+    try {
+      User loggedIn = await db.loginUser(
+        TextCont.userId.text,
+        TextCont.password.text,
+      );
+      box.saveUser(loggedIn);
       Get.toNamed(Routes.reader);
-    } else {
-      errorMessage.value = "Error logging in";
+    } catch (e) {
+      errorMessage.value = e.toString();
     }
   }
 }

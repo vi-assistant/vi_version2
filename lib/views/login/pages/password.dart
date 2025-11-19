@@ -6,11 +6,12 @@ import 'package:vi_assistant/controllers/utils/utils.dart';
 import 'package:vi_assistant/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
-class PasswordPage extends GetView<LoginController> {
+class PasswordPage extends StatelessWidget {
   const PasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<LoginController>();
     return Center(
       child: SizedBox(
         width: 460,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vi_assistant/controllers/auth/login.dart';
+import 'package:vi_assistant/controllers/auth/signup.dart';
 import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/controllers/utils/utils.dart';
+import 'package:vi_assistant/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
-class DepartmentPage extends GetView<LoginController> {
+class DepartmentPage extends GetView<SignupController> {
   const DepartmentPage({super.key});
 
   @override
@@ -18,9 +19,14 @@ class DepartmentPage extends GetView<LoginController> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Spacer(),
+            Obx(() {
+              return Center(
+                child: Text(controller.errorMessage.value, style: Style.error),
+              );
+            }),
             TextEntry(
               label: "Enter Department",
-              hint: "Computer Engineering",
+              hint: "",
               controller: TextCont.department,
             ),
             Row(
@@ -31,7 +37,7 @@ class DepartmentPage extends GetView<LoginController> {
                   child: Text('Prev'),
                 ),
                 ElevatedButton(
-                  onPressed: PageCont.login.goNext,
+                  onPressed: controller.checkDepartment,
                   child: Text('Next'),
                 ),
               ],

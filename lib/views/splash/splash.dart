@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:vi_assistant/controllers/auth/splash.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -7,6 +9,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    Get.find<SplashController>();
     return Scaffold(
       body: Center(
         child: SizedBox(

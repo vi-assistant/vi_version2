@@ -5,12 +5,13 @@ import 'package:vi_assistant/utils/utils.dart';
 
 import 'pages/pages.dart';
 
-class LoginView extends GetView<LoginController> {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    Get.find<LoginController>();
     return Scaffold(
       body: Center(
         child: Column(

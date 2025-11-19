@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vi_assistant/controllers/auth/login.dart';
+import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/controllers/utils/text_cont.dart';
-import 'package:vi_assistant/controllers/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
-class UserIdPage extends GetView<LoginController> {
+class UserIdPage extends GetView<SignupController> {
   const UserIdPage({super.key});
 
   @override
@@ -20,7 +19,7 @@ class UserIdPage extends GetView<LoginController> {
             Spacer(),
             TextEntry(
               label: "Enter User ID",
-              hint: "M1900123",
+              hint: "M12***04",
               controller: TextCont.userId,
             ),
             Row(

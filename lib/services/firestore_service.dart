@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:vi_assistant/models/user.dart';
+import 'package:vi_assistant/services/box_service.dart';
 
 class FirestoreService extends GetxService {
-  Future<void> registerUser({
+  BoxService box = Get.find<BoxService>();
+  Future<User> registerUser({
     required String userID,
     required String username,
     required String department,
@@ -15,33 +18,57 @@ class FirestoreService extends GetxService {
     if (doc.exists) {
       throw Exception("User already exists");
     }
-    print("TEST: $userID, $username, $department, $password");
 
     // Save the user's credentials
-    await docRef.set({
+    final data = {
       'username': username,
       'userID': userID,
-      'department': username,
+      'department': department,
       'password': password,
-    });
+    };
+    await docRef.set(data);
+    return User.fromJson(data);
   }
 
-  Future<bool> loginUser(String userID, String password) async {
+  Future<User> loginUser(String userID, String password) async {
     final docRef = FirebaseFirestore.instance.collection('users').doc(userID);
     final doc = await docRef.get();
-    print("Data: $userID, $password");
 
     if (!doc.exists) {
-      return false;
+      throw Exception("User doesn't exist");
     }
 
     final savedPassword = doc['password'];
-
-    // Check password
     if (savedPassword == password) {
+      final data = doc.data();
+      if (data == null) {
+        throw Exception("User data is null");
+      }
+      return User.fromJson(data);
+    } else {
+      throw Exception("Wrong credentials");
+    }
+  }
+
+  Future<bool> checkDepartment(String department) async {
+    final docRef = FirebaseFirestore.instance
+        .collection('data')
+        .doc('departments');
+    final doc = await docRef.get();
+    final depts = doc.data()!.values.toList();
+    if (depts.contains(department)) {
       return true;
     } else {
       return false;
     }
+  }
+
+  Future<Map?> getBooks() async {
+    print(box.getUser().department);
+    final docRef = FirebaseFirestore.instance
+        .collection('departments')
+        .doc(box.getUser().department);
+    final doc = await docRef.get();
+    return doc.data();
   }
 }

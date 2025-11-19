@@ -45,6 +45,7 @@ class Style {
 
   static InputDecoration roundedRectangle(String hint) => InputDecoration(
     hintText: hint,
+    hintStyle: TextStyle(color: Colors.grey[300]),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: Colors.grey.shade700, width: 2),

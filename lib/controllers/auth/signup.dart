@@ -6,13 +6,16 @@ import 'package:vi_assistant/controllers/utils/page_cont.dart';
 import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/models/models.dart';
 import 'package:vi_assistant/repositories/llm_repository.dart';
+import 'package:vi_assistant/services/box_service.dart';
 import 'package:vi_assistant/services/firestore_service.dart';
 import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
 class SignupController extends GetxController {
-  LLMRepository llmRepo = LLMRepository();
   final speechService = Get.find<SpeechService>();
+  final dbService = Get.find<FirestoreService>();
+  final boxService = Get.find<BoxService>();
+  final llmRepo = LLMRepository();
   final pageController = PageCont.login;
   final RxBool isListening = false.obs;
   final RxString lastWords = ''.obs;
@@ -78,22 +81,35 @@ class SignupController extends GetxController {
         pageController.goNext();
         break;
       case "CHECK_DETAILS":
-        Get.toNamed(Routes.reader);
+        signup();
         break;
     }
   }
 
   void signup() async {
-    final db = Get.find<FirestoreService>();
+    errorMessage.value = "";
     try {
-      await db.registerUser(
+      User usr = await dbService.registerUser(
         userID: TextCont.userId.text,
         username: TextCont.username.text,
         department: TextCont.department.text,
         password: TextCont.password.text,
       );
+      boxService.saveUser(usr);
+      Get.toNamed(Routes.reader);
     } catch (e) {
       errorMessage.value = e.toString();
+    }
+  }
+
+  void checkDepartment() async {
+    errorMessage.value = "";
+    bool deptExists = await dbService.checkDepartment(TextCont.department.text);
+    if (deptExists) {
+      errorMessage.value = "";
+      PageCont.login.goNext();
+    } else {
+      errorMessage.value = "Department doesn't exist";
     }
   }
 }

@@ -5,17 +5,21 @@ import 'package:vi_assistant/controllers/utils/page_cont.dart';
 import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/models/models.dart';
 import 'package:vi_assistant/repositories/llm_repository.dart';
+import 'package:vi_assistant/services/firestore_service.dart';
 import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
 class ReaderController extends GetxController {
-  LLMRepository llmRepo = LLMRepository();
+  final llmRepo = LLMRepository();
   final speechService = Get.find<SpeechService>();
+  final dbService = Get.find<FirestoreService>();
   final pageController = PageCont.reader;
   final RxInt pageIndex = 0.obs;
   final RxString dta = ''.obs;
   final RxBool isListening = false.obs;
   final RxString lastWords = ''.obs;
+  final RxMap bookList = {}.obs;
+  final RxString book = ''.obs;
 
   Timer? _timer;
   final Duration _delay = const Duration(seconds: 1);
@@ -82,5 +86,16 @@ class ReaderController extends GetxController {
         pageController.goNext();
         break;
     }
+  }
+
+  void getBooks() async {
+    print("Getting books");
+    bookList.value = await dbService.getBooks() ?? {};
+  }
+
+  void openBook(String bookName) {
+    List url = bookList[bookName].split('/');
+    book.value = "https://drive.google.com/uc?export=download&id=${url[5]}";
+    PageCont.reader.goNext();
   }
 }
