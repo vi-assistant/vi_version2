@@ -6,6 +6,7 @@ import 'package:vi_assistant/controllers/utils/page_cont.dart';
 import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/models/models.dart';
 import 'package:vi_assistant/repositories/llm_repository.dart';
+import 'package:vi_assistant/services/firestore_service.dart';
 import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
@@ -16,6 +17,7 @@ class LoginController extends GetxController {
   final RxString dta = ''.obs;
   final RxBool isListening = false.obs;
   final RxString lastWords = ''.obs;
+  final RxString errorMessage = ''.obs;
 
   Timer? _timer;
   final Duration _delay = const Duration(seconds: 1);
@@ -23,7 +25,7 @@ class LoginController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    done("Hi");
+    print("Me!!!");
     speechService.streamData.listen((data) {
       Get.log('Live: ${data.liveResponse}, Final Text: ${data.entireResponse}');
       if (data.liveResponse != lastWords.value) done(data.liveResponse);
@@ -42,7 +44,9 @@ class LoginController extends GetxController {
         final resp = await llmRepo.respond(
           text,
           "LOGIN",
-          Actions.login(pageController.page!.toInt()),
+          Actions.login(
+            pageController.page == null ? 0 : pageController.page!.toInt(),
+          ),
         );
         action(resp);
         await speechService.speak(resp.message);
@@ -71,6 +75,23 @@ class LoginController extends GetxController {
       case "NEXT_PAGE":
         pageController.goNext();
         break;
+      case "CHECK_DETAILS":
+        login();
+        break;
+    }
+  }
+
+  void login() async {
+    final db = Get.find<FirestoreService>();
+    bool loggedIn = await db.loginUser(
+      TextCont.userId.text,
+      TextCont.password.text,
+    );
+
+    if (loggedIn) {
+      Get.toNamed(Routes.reader);
+    } else {
+      errorMessage.value = "Error logging in";
     }
   }
 }

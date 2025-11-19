@@ -16,6 +16,12 @@ class Style {
     fontSize: 17,
   );
 
+  static final TextStyle error = TextStyle(
+    fontWeight: FontWeight.bold,
+    color: Colors.red,
+    fontSize: 17,
+  );
+
   static final TextStyle grey = TextStyle(
     color: Colors.grey[700],
     fontSize: 14,

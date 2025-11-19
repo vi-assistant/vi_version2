@@ -24,8 +24,8 @@ class Actions {
       "ENTER_USERNAME (nextMessage = Enter User ID)",
       "ENTER_USERID (nextMessage = Enter Department)",
       "ENTER_DEPARTMENT (nextMessage = Enter Phone Number)",
-      "ENTER_PASSWORD (nextMessage = Confirm Password)",
-      "CONFIRM_PASSWORD (nextMessage = Please Wait, nextAction = CHECK_DETAILS)",
+      // "ENTER_PASSWORD (nextMessage = Confirm Password)",
+      "ENTER_PASSWORD (nextMessage = Please Wait, nextAction = CHECK_DETAILS)",
     ];
     signin.add(subPages[pageIndex]);
     pageIndex > 0 ? signin.add("GO_BACK (Optional)") : signin.add("NEXT_PAGE");

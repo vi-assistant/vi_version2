@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/controllers/utils/utils.dart';
 import 'package:vi_assistant/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
@@ -20,6 +21,7 @@ class ConfirmPasswordPage extends StatelessWidget {
               label: "Confirm Password",
               hint: "Not less than 6 characters",
               hide: true,
+              controller: TextCont.confirmPassword,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

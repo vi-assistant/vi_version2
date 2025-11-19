@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:vi_assistant/controllers/auth/signup.dart';
+import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/controllers/utils/utils.dart';
+import 'package:vi_assistant/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
-class PasswordPage extends StatelessWidget {
+class PasswordPage extends GetView<SignupController> {
   const PasswordPage({super.key});
 
   @override
@@ -15,10 +19,16 @@ class PasswordPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Spacer(),
+            Obx(() {
+              return Center(
+                child: Text(controller.errorMessage.value, style: Style.error),
+              );
+            }),
             TextEntry(
               label: "Enter Password",
               hint: "Not less than 6 characters",
               hide: true,
+              controller: TextCont.password,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,8 +38,8 @@ class PasswordPage extends StatelessWidget {
                   child: Text('Prev'),
                 ),
                 ElevatedButton(
-                  onPressed: PageCont.login.goNext,
-                  child: Text('Next'),
+                  onPressed: controller.signup,
+                  child: Text('Submit'),
                 ),
               ],
             ),

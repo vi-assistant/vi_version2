@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vi_assistant/controllers/auth/login.dart';
+import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/controllers/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
@@ -17,7 +18,11 @@ class DepartmentPage extends GetView<LoginController> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Spacer(),
-            TextEntry(label: "Enter Department", hint: "Computer Engineering"),
+            TextEntry(
+              label: "Enter Department",
+              hint: "Computer Engineering",
+              controller: TextCont.department,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

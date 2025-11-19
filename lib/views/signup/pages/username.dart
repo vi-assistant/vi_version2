@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vi_assistant/controllers/auth/login.dart';
+import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/controllers/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
@@ -17,7 +18,7 @@ class UsernamePage extends GetView<LoginController> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Spacer(),
-            TextEntry(label: "Enter Username", hint: "John"),
+            TextEntry(label: "Enter Username", hint: "John", controller: TextCont.username,),
             ElevatedButton(
               onPressed: PageCont.login.goNext,
               child: Text('Next'),

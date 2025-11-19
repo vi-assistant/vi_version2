@@ -5,19 +5,12 @@ import 'package:http/http.dart' as http;
 
 import '../models/message.dart';
 
-class LLMService {
+class LLMService extends GetxService {
   final loading = false.obs;
-
-  Future<LLMService> init() async {
-    return this;
-  }
-
   Future<BotMessage> getResponse(String body) async {
-    final uri = Uri.parse(dotenv.env['BASE_URL']!).replace(
-      queryParameters: {
-        'key': dotenv.env['API_KEY']!,
-      },
-    );
+    final uri = Uri.parse(
+      dotenv.env['BASE_URL']!,
+    ).replace(queryParameters: {'key': dotenv.env['API_KEY']!});
     final response = await http.post(uri, body: body);
     if (response.statusCode == 200) {
       final Map data = json.decode(response.body);

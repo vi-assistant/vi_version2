@@ -5,11 +5,13 @@ class TextEntry extends StatelessWidget {
   const TextEntry({
     super.key,
     required this.label,
+    required this.controller,
     this.hint = '',
     this.hide = false,
   });
 
   final String label, hint;
+  final TextEditingController controller;
   final bool hide;
 
   @override
@@ -19,7 +21,11 @@ class TextEntry extends StatelessWidget {
       spacing: 16,
       children: [
         Text(label, style: Style.label),
-        TextField(obscureText: hide, decoration: Style.roundedRectangle(hint)),
+        TextField(
+          obscureText: hide,
+          decoration: Style.roundedRectangle(hint),
+          controller: controller,
+        ),
       ],
     );
   }

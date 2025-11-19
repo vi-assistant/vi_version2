@@ -8,14 +8,9 @@ import 'package:vi_assistant/services/llm_service.dart';
 import 'package:vi_assistant/services/speech_service.dart';
 
 class LLMRepository {
-  late LLMService llmService;
-  late SpeechService speechService;
   final List<Message> messages = [];
-
-  LLMRepository() {
-    llmService = Get.find<LLMService>();
-    speechService = Get.find<SpeechService>();
-  }
+  final speechService = Get.find<SpeechService>();
+  final llmService = Get.find<LLMService>();
 
   Future<BotMessage> respond(
     String message,
@@ -23,7 +18,6 @@ class LLMRepository {
     List<String> actions,
   ) async {
     messages.clear();
-    print("Respond is called");
     messages.insert(0, UserMessage(text: message));
     try {
       final message = await llmService.getResponse(

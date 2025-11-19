@@ -37,7 +37,7 @@ class SignupView extends StatelessWidget {
                   UsernamePage(),
                   UserIdPage(),
                   PasswordPage(),
-                  ConfirmPasswordPage(),
+                  // ConfirmPasswordPage(),
                 ],
               ),
             ),

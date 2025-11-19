@@ -7,34 +7,26 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechService extends GetxService {
-  SpeechService() {
-    flutterTts = FlutterTts();
-    speech = SpeechToText();
-  }
-
-  late FlutterTts flutterTts;
-  late SpeechToText speech;
-
-  final isListening = false.obs;
+  FlutterTts flutterTts = FlutterTts();
+  SpeechToText speech = SpeechToText();
+  late final LLMService llmService;
   bool isAvailable = false;
   String liveResponse = '';
   String entireResponse = '';
   String chunkResponse = '';
 
-  void clearResponse() {
-    liveResponse = '';
-    entireResponse = '';
-    chunkResponse = '';
-  }
-
-  Future<SpeechService> init() async {
-    await initTts();
-    await initSTT();
-    return this;
-  }
-
+  final isListening = false.obs;
   final _streamcontroller = StreamController<SpeechData>.broadcast();
   Stream<SpeechData> get streamData => _streamcontroller.stream;
+
+  @override
+  void onInit() async {
+    // Initialize referenced services once this service is created
+    llmService = Get.find<LLMService>();
+    await initTts();
+    await initSTT();
+    super.onInit();
+  }
 
   @override
   void onClose() {
@@ -47,7 +39,7 @@ class SpeechService extends GetxService {
       onStatus: (status) async {
         if ((status == "done" || status == "notListening") &&
             isListening.value &&
-            Get.find<LLMService>().loading.value) {
+            llmService.loading.value) {
           await speech.stop();
           if (chunkResponse != '') {
             entireResponse = '$entireResponse $chunkResponse';
