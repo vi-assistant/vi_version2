@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "217237713046",
+    "project_id": "vi-assistant",
+    "storage_bucket": "vi-assistant.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217237713046:android:6cf3d20504c27ee02912b7",
+        "android_client_info": {
+          "package_name": "com.example.vi_assistant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVQfZh6yott-Zx2oF64V0jQxqgHwW_iRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/services/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:vi_assistant/utils/utils.dart';
 import 'package:vi_assistant/views/views.dart';
+import 'package:flutter/material.dart';
+import 'firebase_options.dart';
+import 'package:get/get.dart';
 
-// Vertex AI for Gemini suff
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   initServices();
   initControllers();
   runApp(

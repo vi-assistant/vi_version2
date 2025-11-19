@@ -4,7 +4,6 @@ import 'llm_service.dart';
 import 'package:get/get.dart';
 import '../models/speech_data.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:flutter_tts/flutter_tts_web.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechService extends GetxService {
@@ -15,8 +14,6 @@ class SpeechService extends GetxService {
 
   late FlutterTts flutterTts;
   late SpeechToText speech;
-
-  final ttsState = TtsState.stopped.obs;
 
   final isListening = false.obs;
   bool isAvailable = false;
@@ -50,7 +47,6 @@ class SpeechService extends GetxService {
       onStatus: (status) async {
         if ((status == "done" || status == "notListening") &&
             isListening.value &&
-            Get.find<SpeechService>().ttsState.value == TtsState.stopped &&
             Get.find<LLMService>().loading.value) {
           await speech.stop();
           if (chunkResponse != '') {
@@ -59,11 +55,13 @@ class SpeechService extends GetxService {
           chunkResponse = '';
           liveResponse = '';
 
-          _streamcontroller.sink.add(SpeechData(
-            liveResponse: liveResponse,
-            entireResponse: entireResponse,
-            isListening: isListening.value,
-          ));
+          _streamcontroller.sink.add(
+            SpeechData(
+              liveResponse: liveResponse,
+              entireResponse: entireResponse,
+              isListening: isListening.value,
+            ),
+          );
           startListening();
         }
       },
@@ -72,36 +70,6 @@ class SpeechService extends GetxService {
 
   Future<void> initTts() async {
     await flutterTts.awaitSpeakCompletion(true);
-
-    flutterTts.setStartHandler(() {
-      debugPrint("Playing");
-      ttsState.value = TtsState.playing;
-    });
-
-    flutterTts.setCompletionHandler(() {
-      debugPrint("Complete");
-      ttsState.value = TtsState.stopped;
-    });
-
-    flutterTts.setCancelHandler(() {
-      debugPrint("Cancel");
-      ttsState.value = TtsState.stopped;
-    });
-
-    flutterTts.setPauseHandler(() {
-      debugPrint("Paused");
-      ttsState.value = TtsState.paused;
-    });
-
-    flutterTts.setContinueHandler(() {
-      debugPrint("Continued");
-      ttsState.value = TtsState.continued;
-    });
-
-    flutterTts.setErrorHandler((msg) {
-      debugPrint("error: $msg");
-      ttsState.value = TtsState.stopped;
-    });
   }
 
   Future<void> speak(String text) async {
@@ -136,11 +104,13 @@ class SpeechService extends GetxService {
       isListening.value = true;
       liveResponse = '';
       chunkResponse = '';
-      _streamcontroller.sink.add(SpeechData(
-        liveResponse: liveResponse,
-        entireResponse: entireResponse,
-        isListening: isListening.value,
-      ));
+      _streamcontroller.sink.add(
+        SpeechData(
+          liveResponse: liveResponse,
+          entireResponse: entireResponse,
+          isListening: isListening.value,
+        ),
+      );
       await speech.stop();
       try {
         await Future.delayed(const Duration(milliseconds: 500));
@@ -155,11 +125,13 @@ class SpeechService extends GetxService {
             if (result.finalResult) {
               chunkResponse = result.recognizedWords;
             }
-            _streamcontroller.sink.add(SpeechData(
-              liveResponse: liveResponse,
-              entireResponse: entireResponse,
-              isListening: isListening.value,
-            ));
+            _streamcontroller.sink.add(
+              SpeechData(
+                liveResponse: liveResponse,
+                entireResponse: entireResponse,
+                isListening: isListening.value,
+              ),
+            );
           },
         );
       } catch (e) {
@@ -174,10 +146,12 @@ class SpeechService extends GetxService {
     isListening.value = false;
     speech.stop();
     entireResponse = '$entireResponse $chunkResponse';
-    _streamcontroller.sink.add(SpeechData(
-      liveResponse: liveResponse,
-      entireResponse: entireResponse,
-      isListening: isListening.value,
-    ));
+    _streamcontroller.sink.add(
+      SpeechData(
+        liveResponse: liveResponse,
+        entireResponse: entireResponse,
+        isListening: isListening.value,
+      ),
+    );
   }
 }

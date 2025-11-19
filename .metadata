@@ -15,7 +15,7 @@ migration:
     - platform: root
       create_revision: f16b4ff8921f452da733f17b243f627d08f1e378
       base_revision: f16b4ff8921f452da733f17b243f627d08f1e378
-    - platform: windows
+    - platform: android
       create_revision: f16b4ff8921f452da733f17b243f627d08f1e378
       base_revision: f16b4ff8921f452da733f17b243f627d08f1e378
 
