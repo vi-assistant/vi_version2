@@ -4,12 +4,13 @@ import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/utils/utils.dart';
 import 'pages/pages.dart';
 
-class ReaderView extends GetView<ReaderController> {
+class ReaderView extends StatelessWidget {
   const ReaderView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final c = Get.find<ReaderController>();
     return Scaffold(
       body: Column(
         children: [
@@ -21,7 +22,7 @@ class ReaderView extends GetView<ReaderController> {
                 spacing: 12,
                 children: [
                   Obx(() {
-                    if (controller.pageIndex.value != 0) {
+                    if (c.pageIndex.value != 0) {
                       return IconButton(
                         onPressed: () {
                           PageCont.reader.goBack();
@@ -38,7 +39,7 @@ class ReaderView extends GetView<ReaderController> {
                   Text("VI Assistant - Reader", style: Style.bold),
                   Spacer(),
                   Obx(() {
-                    if (controller.pageIndex.value != 0) {
+                    if (c.pageIndex.value != 0) {
                       return IconButton(
                         onPressed: () {
                           PageCont.reader.goBack();
@@ -58,9 +59,9 @@ class ReaderView extends GetView<ReaderController> {
             padding: Style.screenPadding,
             child: PageView(
               physics: NeverScrollableScrollPhysics(),
-              controller: controller.pageController,
+              controller: c.pageController,
               onPageChanged: (page) {
-                controller.pageIndex.value = page.toInt();
+                c.pageIndex.value = page.toInt();
               },
               children: [DoclistPage(), DocPage()],
             ),

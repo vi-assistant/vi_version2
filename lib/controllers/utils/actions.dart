@@ -9,7 +9,7 @@ class Actions {
   static List<String> login(int pageIndex) {
     List<String> login = ["SIGNUP (nextMessage = Login or Signup)"];
     List<String> subPages = [
-      "ENTER_USERID (nextMessage = Enter Department)",
+      "ENTER_USERID (nextMessage = Enter Password)",
       "ENTER_PASSWORD (nextMessage = Please Wait, nextAction = CHECK_DETAILS)",
     ];
     login.add(subPages[pageIndex]);
@@ -23,8 +23,7 @@ class Actions {
     List<String> subPages = [
       "ENTER_USERNAME (nextMessage = Enter User ID)",
       "ENTER_USERID (nextMessage = Enter Department)",
-      "ENTER_DEPARTMENT (nextMessage = Enter Phone Number)",
-      // "ENTER_PASSWORD (nextMessage = Confirm Password)",
+      "ENTER_DEPARTMENT (nextMessage = Enter Password)",
       "ENTER_PASSWORD (nextMessage = Please Wait, nextAction = CHECK_DETAILS)",
     ];
     signin.add(subPages[pageIndex]);

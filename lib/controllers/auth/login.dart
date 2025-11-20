@@ -1,71 +1,24 @@
-import 'dart:async';
-
-import 'package:get/get.dart';
-import 'package:vi_assistant/actions/actions.dart';
-import 'package:vi_assistant/controllers/utils/page_cont.dart';
-import 'package:vi_assistant/controllers/utils/text_cont.dart';
-import 'package:vi_assistant/models/models.dart';
-import 'package:vi_assistant/repositories/llm_repository.dart';
-import 'package:vi_assistant/services/box_service.dart';
-import 'package:vi_assistant/services/firestore_service.dart';
+import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/services/services.dart';
+import 'package:vi_assistant/models/models.dart';
 import 'package:vi_assistant/utils/utils.dart';
+import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final speechService = Get.find<SpeechService>();
+  final pageController = PageCont.login;
+  final app = Get.find<AppController>();
   final db = Get.find<FirestoreService>();
   final box = Get.find<BoxService>();
-  final llmRepo = LLMRepository();
-  final pageController = PageCont.login;
-  final RxString dta = ''.obs;
-  final RxBool isListening = false.obs;
-  final RxString lastWords = ''.obs;
-  final RxString errorMessage = ''.obs;
-
-  Timer? _timer;
-  final Duration _delay = const Duration(seconds: 1);
-
-  @override
-  void onInit() async {
-    super.onInit();
-    speechService.streamData.listen((data) {
-      Get.log('Live: ${data.liveResponse}, Final Text: ${data.entireResponse}');
-      if (data.liveResponse != lastWords.value) done(data.liveResponse);
-      lastWords.value = data.liveResponse;
-      isListening.value = data.isListening;
-    });
-  }
-
-  void done(String text) {
-    _timer?.cancel();
-    _timer = Timer(_delay, () async {
-      if (text.isNotEmpty) {
-        isListening.value = false;
-        speechService.stopListening();
-        Get.find<LLMService>().loading.value = true;
-        final resp = await llmRepo.respond(
-          text,
-          "LOGIN",
-          Actions.login(
-            pageController.page == null ? 0 : pageController.page!.toInt(),
-          ),
-        );
-        action(resp);
-        await speechService.speak(resp.message);
-        Get.find<LLMService>().loading.value = false;
-        isListening.value = true;
-        speechService.startListening();
-      }
-      _timer = null;
-    });
-  }
 
   void action(BotMessage message) {
     switch (message.action) {
       case "SIGNUP":
+        app.reset();
         Get.toNamed(Routes.signup);
+        app.screen.value = Routes.signup;
         break;
       case "GO_BACK":
+        app.reset();
         pageController.goBack();
         break;
       case "ENTER_USERID":
@@ -75,6 +28,7 @@ class LoginController extends GetxController {
         TextCont.password.text = message.input;
         break;
       case "NEXT_PAGE":
+        app.reset();
         pageController.goNext();
         break;
       case "CHECK_DETAILS":
@@ -84,6 +38,7 @@ class LoginController extends GetxController {
   }
 
   void login() async {
+    app.error.value = "";
     try {
       User loggedIn = await db.loginUser(
         TextCont.userId.text,
@@ -92,7 +47,7 @@ class LoginController extends GetxController {
       box.saveUser(loggedIn);
       Get.toNamed(Routes.reader);
     } catch (e) {
-      errorMessage.value = e.toString();
+      app.error.value = "Unable to login";
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:vi_assistant/actions/actions.dart';
+import 'package:vi_assistant/controllers/utils/actions.dart';
 import 'package:vi_assistant/controllers/utils/page_cont.dart';
 import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/models/models.dart';
