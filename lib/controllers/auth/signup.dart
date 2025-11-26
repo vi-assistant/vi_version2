@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/services/services.dart';
 import 'package:vi_assistant/models/models.dart';
@@ -8,7 +10,7 @@ class SignupController extends GetxController {
   final dbService = Get.find<FirestoreService>();
   final boxService = Get.find<BoxService>();
   final app = Get.find<AppController>();
-  final pageController = PageCont.login;
+  final pageController = PageCont.signup;
 
   void action(BotMessage message) {
     switch (message.action) {
@@ -22,15 +24,24 @@ class SignupController extends GetxController {
         break;
       case "ENTER_USERNAME":
         TextCont.userId.text = message.input;
+        Timer(Duration(seconds: 1), () => pageController.goNext());
         break;
       case "ENTER_USERID":
-        TextCont.username.text = message.input;
+        TextCont.username.text = message.input.removeAllWhitespace
+            .toUpperCase();
+        pageController.goNext();
         break;
       case "ENTER_DEPARTMENT":
         TextCont.department.text = message.input;
+        checkDepartment();
+        if (app.error.value.isNotEmpty){
+          
+        }
+        pageController.goNext();
         break;
       case "ENTER_PASSWORD":
-        TextCont.password.text = message.input;
+        TextCont.password.text = message.input.removeAllWhitespace;
+        Timer(Duration(seconds: 1), () => pageController.goNext());
         break;
       case "NEXT_PAGE":
         app.reset();

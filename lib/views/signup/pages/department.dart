@@ -30,7 +30,7 @@ class DepartmentPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: PageCont.login.goBack,
+                  onPressed: PageCont.signup.goBack,
                   child: Text('Prev'),
                 ),
                 ElevatedButton(

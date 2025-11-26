@@ -10,12 +10,12 @@ class SplashController extends GetxController {
       case "SIGNUP":
         app.reset();
         Get.toNamed(Routes.signup);
-        Get.find<AppController>().screen.value = Routes.signup;
+        app.screen.value = Routes.signup;
         break;
       case "LOGIN":
         app.reset();
         Get.toNamed(Routes.login);
-        Get.find<AppController>().screen.value = Routes.login;
+        app.screen.value = Routes.login;
         break;
     }
   }

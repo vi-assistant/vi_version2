@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vi_assistant/controllers/auth/login.dart';
-import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/controllers/utils/utils.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 

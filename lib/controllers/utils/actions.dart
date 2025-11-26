@@ -1,3 +1,4 @@
+
 class Actions {
   // Splash screen
   static const splash = [

@@ -30,3 +30,10 @@ void main() async {
     ),
   );
 }
+
+
+// TODO:
+// - Create .env file and add the BASE_URL and API_KEY
+// - Fix speech recognition system
+// - Optimize Gemini prompt
+// - Implement interruptible read for reader screen

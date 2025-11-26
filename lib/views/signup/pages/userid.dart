@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vi_assistant/controllers/controllers.dart';
-import 'package:vi_assistant/controllers/utils/text_cont.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
 class UserIdPage extends GetView<SignupController> {
@@ -26,11 +25,11 @@ class UserIdPage extends GetView<SignupController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: PageCont.login.goBack,
+                  onPressed: PageCont.signup.goBack,
                   child: Text('Prev'),
                 ),
                 ElevatedButton(
-                  onPressed: PageCont.login.goNext,
+                  onPressed: PageCont.signup.goNext,
                   child: Text('Next'),
                 ),
               ],

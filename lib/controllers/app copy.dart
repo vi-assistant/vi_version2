@@ -17,6 +17,7 @@ class AppController extends GetxController {
   final llmRepo = LLMRepository();
   final isListening = false.obs;
   final recordedText = ''.obs;
+  final lastWords = ''.obs;
   final _delay = const Duration(seconds: 2);
   Timer? _timer;
 
@@ -29,10 +30,13 @@ class AppController extends GetxController {
     super.onInit();
     screen.value = Routes.splash;
     done("Hi");
-    speechService.streamData.listen((data) async {
-      isListening.value ? recordedText.value = data.liveResponse : null;
-      Get.log(recordedText.value);
-      done(recordedText.value);
+    speechService.streamData.listen((data) {
+      Get.log(data.liveResponse);
+      if ((data.liveResponse != lastWords.value) && data.isListening) {
+        done(data.liveResponse);
+      }
+      lastWords.value = data.liveResponse;
+      isListening.value = data.isListening;
     });
   }
 
@@ -48,21 +52,20 @@ class AppController extends GetxController {
     _timer?.cancel();
     _timer = Timer(_delay, () async {
       if (text.isNotEmpty) {
-        llmService.loading.value = true;
         isListening.value = false;
+        llmService.loading.value = true;
         print("Calling for response");
         final resp = await llmRepo.respond(
           text,
           screen.value.substring(1).toUpperCase(),
-          actionList(),
+          Actions.splash,
         );
-        Get.log("Response: ${resp.action}, ${resp.input}, ${resp.message}");
+        print("Response: ${resp.action}, ${resp.input}, ${resp.message}");
         action(resp);
-        speechService.speak(resp.message).then((_) {
-          isListening.value = true;
-        });
-        recordedText.value = "";
+        await speechService.speak(resp.message);
         llmService.loading.value = false;
+        isListening.value = true;
+        speechService.startListening();
       }
       _timer = null;
     });
@@ -83,34 +86,5 @@ class AppController extends GetxController {
         Get.find<ReaderController>().action(message);
         break;
     }
-  }
-
-  List<String> actionList() {
-    switch (screen.value) {
-      case Routes.splash:
-        return Actions.splash;
-      case Routes.login:
-        double? pg = PageCont.login.page;
-        if (pg == null) {
-          return Actions.login(0);
-        } else {
-          return Actions.login(pg.toInt());
-        }
-      case Routes.signup:
-        double? pg = PageCont.signup.page;
-        if (pg == null) {
-          return Actions.signup(0);
-        } else {
-          return Actions.signup(pg.toInt());
-        }
-      case Routes.reader:
-        double? pg = PageCont.reader.page;
-        if (pg == null) {
-          return Actions.reader(0);
-        } else {
-          return Actions.reader(pg.toInt());
-        }
-    }
-    return [];
   }
 }

@@ -7,24 +7,28 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechService extends GetxService {
-  FlutterTts flutterTts = FlutterTts();
-  SpeechToText speech = SpeechToText();
-  late final LLMService llmService;
+  FlutterTts tts = FlutterTts();
+  SpeechToText stt = SpeechToText();
+  final llmService = LLMService();
   bool isAvailable = false;
-  String liveResponse = '';
-  String entireResponse = '';
-  String chunkResponse = '';
-
   final isListening = false.obs;
   final _streamcontroller = StreamController<SpeechData>.broadcast();
   Stream<SpeechData> get streamData => _streamcontroller.stream;
 
   @override
   void onInit() async {
-    // Initialize referenced services once this service is created
-    llmService = Get.find<LLMService>();
-    await initTts();
-    await initSTT();
+    await tts.awaitSpeakCompletion(true);
+    isAvailable = await stt.initialize(
+      onStatus: (status) {
+        if (status == "notListening") {
+          Future.delayed(Duration(milliseconds: 300), () => startListening());
+        }
+      },
+      onError: (errorNotification) {
+        Future.delayed(Duration(milliseconds: 300), () => startListening());
+      },
+    );
+    startListening();
     super.onInit();
   }
 
@@ -34,94 +38,32 @@ class SpeechService extends GetxService {
     super.onClose();
   }
 
-  Future<void> initSTT() async {
-    isAvailable = await speech.initialize(
-      onStatus: (status) async {
-        if ((status == "done" || status == "notListening") &&
-            isListening.value &&
-            llmService.loading.value) {
-          await speech.stop();
-          if (chunkResponse != '') {
-            entireResponse = '$entireResponse $chunkResponse';
-          }
-          chunkResponse = '';
-          liveResponse = '';
-
-          _streamcontroller.sink.add(
-            SpeechData(
-              liveResponse: liveResponse,
-              entireResponse: entireResponse,
-              isListening: isListening.value,
-            ),
-          );
-          startListening();
-        }
-      },
-    );
-  }
-
-  Future<void> initTts() async {
-    await flutterTts.awaitSpeakCompletion(true);
-  }
-
   Future<void> speak(String text) async {
-    debugPrint("[DEBUG] Speak is called");
     if (isListening.value) {
-      await speech.stop();
+      await stt.stop();
       isListening.value = false;
     }
     if (text.isNotEmpty && text != "null") {
       debugPrint("[BOT] $text");
-      await flutterTts.speak(text);
-    }
-  }
-
-  void interruptibleSpeak(String text) => flutterTts.speak(text);
-  void interrupt() => flutterTts.stop();
-
-  Future<void> stop() async {
-    try {
-      debugPrint("[DEBUG] Shutup is called");
-      await speech.stop();
-      debugPrint("[DEBUG] Shutup");
-      isListening.value = true;
-    } catch (e) {
-      print("Wasn't able to shutup");
+      await tts.speak(text);
     }
   }
 
   void startListening() async {
-    debugPrint("[DEBUG] Listen is called. isAvailable: $isAvailable");
     if (isAvailable) {
-      isListening.value = true;
-      liveResponse = '';
-      chunkResponse = '';
-      _streamcontroller.sink.add(
-        SpeechData(
-          liveResponse: liveResponse,
-          entireResponse: entireResponse,
-          isListening: isListening.value,
-        ),
-      );
-      await speech.stop();
+      // await stt.stop();
       try {
-        await Future.delayed(const Duration(milliseconds: 500));
-        await speech.listen(
+        await stt.listen(
           listenOptions: SpeechListenOptions(
             listenMode: ListenMode.dictation,
             onDevice: true,
           ),
           onResult: (result) {
-            liveResponse = result.recognizedWords;
-            debugPrint("[DEBUG] Final result? ${result.finalResult}");
-            if (result.finalResult) {
-              chunkResponse = result.recognizedWords;
-            }
             _streamcontroller.sink.add(
               SpeechData(
-                liveResponse: liveResponse,
-                entireResponse: entireResponse,
-                isListening: isListening.value,
+                liveResponse: result.recognizedWords,
+                entireResponse: "",
+                isListening: !result.finalResult,
               ),
             );
           },
@@ -129,21 +71,6 @@ class SpeechService extends GetxService {
       } catch (e) {
         debugPrint("[ERROR] $e");
       }
-    } else {
-      debugPrint('Ultra Speech ERROR : Speech recognition not available');
     }
-  }
-
-  void stopListening() {
-    isListening.value = false;
-    speech.stop();
-    entireResponse = '$entireResponse $chunkResponse';
-    _streamcontroller.sink.add(
-      SpeechData(
-        liveResponse: liveResponse,
-        entireResponse: entireResponse,
-        isListening: isListening.value,
-      ),
-    );
   }
 }

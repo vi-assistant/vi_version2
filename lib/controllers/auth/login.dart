@@ -23,12 +23,13 @@ class LoginController extends GetxController {
         break;
       case "ENTER_USERID":
         TextCont.userId.text = message.input;
+        pageController.goNext();
         break;
       case "ENTER_PASSWORD":
         TextCont.password.text = message.input;
+        pageController.goNext();
         break;
       case "NEXT_PAGE":
-        app.reset();
         pageController.goNext();
         break;
       case "CHECK_DETAILS":

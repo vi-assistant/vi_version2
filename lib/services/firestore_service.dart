@@ -56,7 +56,10 @@ class FirestoreService extends GetxService {
         .doc('departments');
     final doc = await docRef.get();
     final depts = doc.data()!.values.toList();
-    if (depts.contains(department)) {
+    for (var l in depts) {
+      l.toLowerCase();
+    }
+    if (depts.contains(department.toLowerCase())) {
       return true;
     } else {
       return false;
@@ -64,7 +67,6 @@ class FirestoreService extends GetxService {
   }
 
   Future<Map?> getBooks() async {
-    print(box.getUser().department);
     final docRef = FirebaseFirestore.instance
         .collection('departments')
         .doc(box.getUser().department);

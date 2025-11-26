@@ -27,7 +27,10 @@ class LLMRepository {
     } catch (e) {
       Get.log(e.toString()); // Speak out the error
       messages.removeLast();
-      await speechService.speak(e.toString());
+      await speechService.speak(
+        "It seems the network is down. Please try again",
+      );
+      respond(message, screen, actions);
     }
     return BotMessage();
   }
