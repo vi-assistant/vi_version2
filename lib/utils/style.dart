@@ -16,6 +16,12 @@ class Style {
     fontSize: 17,
   );
 
+  static final TextStyle error = TextStyle(
+    fontWeight: FontWeight.bold,
+    color: Colors.red,
+    fontSize: 17,
+  );
+
   static final TextStyle grey = TextStyle(
     color: Colors.grey[700],
     fontSize: 14,
@@ -39,6 +45,7 @@ class Style {
 
   static InputDecoration roundedRectangle(String hint) => InputDecoration(
     hintText: hint,
+    hintStyle: TextStyle(color: Colors.grey[300]),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: Colors.grey.shade700, width: 2),

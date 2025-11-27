@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vi_assistant/controllers/login/login.dart';
-import 'package:vi_assistant/controllers/utils/utils.dart';
+import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/widgets/widgets.dart';
 
-class UsernamePage extends GetView<LoginController> {
+class UsernamePage extends GetView<SignupController> {
   const UsernamePage({super.key});
 
   @override
@@ -17,9 +16,13 @@ class UsernamePage extends GetView<LoginController> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Spacer(),
-            TextEntry(label: "Enter Username", hint: "John"),
+            TextEntry(
+              label: "Enter Username",
+              hint: "John Doe",
+              controller: TextCont.username,
+            ),
             ElevatedButton(
-              onPressed: PageCont.login.goNext,
+              onPressed: PageCont.signup.goNext,
               child: Text('Next'),
             ),
             Spacer(),

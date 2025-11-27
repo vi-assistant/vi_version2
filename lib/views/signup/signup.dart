@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vi_assistant/controllers/utils/page_cont.dart';
+import 'package:get/get.dart';
+import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/utils/utils.dart';
 import 'pages/pages.dart';
 
@@ -9,39 +10,37 @@ class SignupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    Get.find<SignupController>();
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: size.width * 0.7,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.arrow_back),
-                    ),
-                    Text("VI Assistant - Signup", style: Style.bold),
-                  ],
-                ),
+            SizedBox(height: 45),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(Icons.arrow_back),
+                  ),
+                  Text("VI Assistant - Signup", style: Style.bold),
+                ],
               ),
             ),
             Container(
-              width: size.width * 0.7,
+              width: size.width * 0.9,
               height: size.height * 0.7,
-              decoration: Style.screenCard,
               padding: Style.screenPadding,
               child: PageView(
                 physics: NeverScrollableScrollPhysics(),
-                controller: PageCont.login,
+                controller: PageCont.signup,
                 children: [
                   UsernamePage(),
                   UserIdPage(),
+                  DepartmentPage(),
                   PasswordPage(),
-                  ConfirmPasswordPage(),
+                  // ConfirmPasswordPage(),
                 ],
               ),
             ),

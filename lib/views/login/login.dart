@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vi_assistant/controllers/utils/page_cont.dart';
+import 'package:get/get.dart';
+import 'package:vi_assistant/controllers/controllers.dart';
 import 'package:vi_assistant/utils/utils.dart';
 
 import 'pages/pages.dart';
@@ -10,13 +11,13 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    Get.find<LoginController>();
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 45),
             SizedBox(
-              width: size.width * 0.7,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Row(
@@ -26,14 +27,14 @@ class LoginView extends StatelessWidget {
                       icon: Icon(Icons.arrow_back),
                     ),
                     Text("VI Assistant - Login", style: Style.bold),
+                    Spacer(),
                   ],
                 ),
               ),
             ),
             Container(
-              width: size.width * 0.7,
+              width: size.width * 0.9,
               height: size.height * 0.7,
-              decoration: Style.screenCard,
               padding: Style.screenPadding,
               child: PageView(
                 physics: NeverScrollableScrollPhysics(),
